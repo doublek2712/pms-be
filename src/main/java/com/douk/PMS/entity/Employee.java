@@ -36,7 +36,7 @@ public class Employee {
     private String position;
     private LocalDate startDate;
     private LocalDate contractDate;
-    private Float salaryGrade;
+    private Double salaryGrade;
     private Long resignationDecision;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "employee")
@@ -51,7 +51,7 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(String firstName, String lastName, String gender, String educational_lvl, String birthplace, String ethnicity, String citizenId, LocalDate birthdate, String address, String hometown, String phoneNumber, Department dept, String position, LocalDate startDate, LocalDate contractDate, Float salaryGrade) {
+    public Employee(String firstName, String lastName, String gender, String educational_lvl, String birthplace, String ethnicity, String citizenId, LocalDate birthdate, String address, String hometown, String phoneNumber, Department dept, String position, LocalDate startDate, LocalDate contractDate, Double salaryGrade) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -70,7 +70,7 @@ public class Employee {
         this.salaryGrade = salaryGrade;
     }
 
-    public Employee(String firstName, String lastName, String gender, String educational_lvl, String birthplace, String ethnicity, String citizenId, LocalDate birthdate, String address, String hometown, String phoneNumber, String position, LocalDate startDate, LocalDate contractDate, Float salaryGrade) {
+    public Employee(String firstName, String lastName, String gender, String educational_lvl, String birthplace, String ethnicity, String citizenId, LocalDate birthdate, String address, String hometown, String phoneNumber, String position, LocalDate startDate, LocalDate contractDate, Double salaryGrade) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -222,11 +222,11 @@ public class Employee {
         this.contractDate = contractDate;
     }
 
-    public Float getSalaryGrade() {
+    public Double getSalaryGrade() {
         return salaryGrade;
     }
 
-    public void setSalaryGrade(Float salaryGrade) {
+    public void setSalaryGrade(Double salaryGrade) {
         this.salaryGrade = salaryGrade;
     }
 
@@ -253,6 +253,7 @@ public class Employee {
     public void setPayslipList(List<Payslip> payslipList) {
         this.payslipList = payslipList;
     }
+
 
 
 

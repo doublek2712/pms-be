@@ -3,9 +3,12 @@ package com.douk.PMS.impl;
 import com.douk.PMS.dto.PayslipDTO;
 import com.douk.PMS.entity.Employee;
 import com.douk.PMS.entity.Payslip;
+import com.douk.PMS.entity.Timekeeping;
 import com.douk.PMS.repo.EmployeeRepository;
 import com.douk.PMS.repo.PayslipRepository;
+import com.douk.PMS.repo.TimekeepingRepository;
 import com.douk.PMS.service.PayslipService;
+import com.douk.PMS.utils.TaxCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +25,9 @@ public class PayslipImpl implements PayslipService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    @Autowired
+    private TimekeepingRepository timekeepingRepository;
+
     @Override
     public String addPayslip(PayslipDTO payslipDTO) {
 
@@ -33,18 +39,46 @@ public class PayslipImpl implements PayslipService {
             throw new IllegalStateException("payslip is already exist");
         }
 
-        Payslip newPayslip = new Payslip(
-                employeeRepository.findById(payslipDTO.getStaffId()).get(),
-                payslipDTO.getMonth(),
-                payslipDTO.getSalary(),
-                payslipDTO.getOvertimePay(),
-                payslipDTO.getSocialInsurance(),
-                payslipDTO.getHealthInsurance(),
-                payslipDTO.getAllowances()
+        Payslip newPayslip = Payslip.builder()
+                .employee(employeeRepository.findById(payslipDTO.getStaffId()).get())
+                .month(payslipDTO.getMonth())
+                .allowances(payslipDTO.getAllowances())
+                .healthInsurance((long) (Payslip.basicSalary * 0.06))
+                .build();
+
+        Optional<Timekeeping> timekeeping = timekeepingRepository.findByMonthAndEmployee(
+                newPayslip.getMonth(),
+                newPayslip.getEmployee()
         );
+
+        if(timekeeping.isEmpty())
+            throw new IllegalStateException("Timekeeping not found");
+
+        // tính lương
+
+        Long dailySalary =
+                (long) ((Payslip.basicSalary * newPayslip.getEmployee().getSalaryGrade()) / newPayslip.getMonth().lengthOfMonth());
+
+        newPayslip.setSalary(calSalary(timekeeping.get().getWorking_days(), dailySalary));
+        newPayslip.setOvertimePay(calOvertimePay(timekeeping.get().getOvertime(), dailySalary));
+        newPayslip.setSocialInsurance((long) (newPayslip.getSalary() * 0.105));
+        newPayslip.setIncomeTax(TaxCalculator.calTax(
+                newPayslip.getSalary()
+                        + newPayslip.getOvertimePay()
+                        + newPayslip.getAllowances()
+                        - newPayslip.getSocialInsurance()
+                        - newPayslip.getHealthInsurance()));
 
         payslipRepository.save(newPayslip);
         return "added payslip of " + newPayslip.getEmployee().getFirstName() + ", month "+ newPayslip.getMonth();
+    }
+
+    private Long calOvertimePay(int overtime, Long dailySalary) {
+        return (long) (overtime * 1.5 * dailySalary);
+    }
+
+    private Long calSalary(int workingDays, Long dailySalary) {
+        return workingDays * dailySalary;
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.douk.PMS.entity.Payslip;
 import com.douk.PMS.repo.EmployeeRepository;
 import com.douk.PMS.service.PayslipService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.YearMonth;
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/payslip")
+@PreAuthorize("hasAuthority('ACCOUNTANT')")
 public class PayslipController {
 
     @Autowired

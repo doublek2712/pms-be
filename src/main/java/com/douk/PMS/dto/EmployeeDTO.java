@@ -19,13 +19,13 @@ public class EmployeeDTO {
     private String position;
     private LocalDate startDate;
     private LocalDate contractDate;
-    private Float salaryGrade;
+    private Double salaryGrade;
     private Long resignationDecision;
 
     public EmployeeDTO() {
     }
 
-    public EmployeeDTO(String firstName, String lastName, String gender, String educational_lvl, String birthplace, String ethnicity, String citizenId, LocalDate birthdate, String address, String hometown, String phoneNumber, Long deptId, String position,  Float salaryGrade) {
+    public EmployeeDTO(String firstName, String lastName, String gender, String educational_lvl, String birthplace, String ethnicity, String citizenId, LocalDate birthdate, String address, String hometown, String phoneNumber, Long deptId, String position,  Double salaryGrade) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -64,7 +64,7 @@ public class EmployeeDTO {
         this.contractDate = contractDate;
     }
 
-    public EmployeeDTO(String firstName, String lastName, String gender, String educational_lvl, String birthplace, String ethnicity, String citizenId, LocalDate birthdate, String address, String hometown, String phoneNumber, Long deptId, String position, LocalDate startDate, LocalDate contractDate, Float salaryGrade) {
+    public EmployeeDTO(String firstName, String lastName, String gender, String educational_lvl, String birthplace, String ethnicity, String citizenId, LocalDate birthdate, String address, String hometown, String phoneNumber, Long deptId, String position, LocalDate startDate, LocalDate contractDate, Double salaryGrade) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
@@ -188,11 +188,11 @@ public class EmployeeDTO {
     }
 
 
-    public Float getSalaryGrade() {
+    public Double getSalaryGrade() {
         return salaryGrade;
     }
 
-    public void setSalaryGrade(Float salaryGrade) {
+    public void setSalaryGrade(Double salaryGrade) {
         this.salaryGrade = salaryGrade;
     }
 

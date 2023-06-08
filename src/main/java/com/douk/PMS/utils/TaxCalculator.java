@@ -1,7 +1,9 @@
 package com.douk.PMS.utils;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TaxCalculator {
 
     private static Double[] taxRare = {0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35};
@@ -16,12 +18,14 @@ public class TaxCalculator {
             80000000L,
     };
 
-    //@Value("${business.personalDeductions}")
-    private static Long personalDeductions = 11000000L;
+    private static long personalDeductions = 11000000;
+
 
     public static Long calTax(Long income){
+
+
         Long res = 0L;
-        Long taxableIncome = income - personalDeductions;
+        Long taxableIncome = income - Long.valueOf(personalDeductions);
         for(int i = 0; i <= taxLevel.length - 1 - 1 && taxableIncome >= taxLevel[i]; i++){
             Long minxOfThisLevel = Long.min(taxLevel[i+1] , taxableIncome);
             res += (long) ( (minxOfThisLevel - taxLevel[i]) * taxRare[i]);

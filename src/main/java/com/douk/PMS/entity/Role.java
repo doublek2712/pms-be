@@ -1,8 +1,9 @@
 package com.douk.PMS.entity;
 
-public enum AccountRole {
+public enum Role {
     ADMIN,
     HR,
     ACCOUNTANT,
-    BOD
+    BOD,
+    USER
 }

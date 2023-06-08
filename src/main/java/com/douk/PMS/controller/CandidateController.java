@@ -4,12 +4,14 @@ import com.douk.PMS.dto.CandidateDTO;
 import com.douk.PMS.entity.Candidate;
 import com.douk.PMS.service.CandidateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/candidate")
+@PreAuthorize("hasAuthority('HR')")
 public class CandidateController {
 
     @Autowired

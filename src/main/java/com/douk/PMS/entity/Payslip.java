@@ -2,12 +2,22 @@ package com.douk.PMS.entity;
 
 import com.douk.PMS.utils.TaxCalculator;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Formula;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.time.YearMonth;
 
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Payslip {
+
+
+    public static Long basicSalary = 1490000L;
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
@@ -17,31 +27,17 @@ public class Payslip {
     @JoinColumn(name = "staff_id", referencedColumnName = "id")
     private Employee employee;
     private YearMonth month;
-
-    private Long salary = 0L;
-    private Long overtimePay = 0L;
-    private Long socialInsurance = 0L;
-    private Long healthInsurance = 0L;
-
-    @Transient
+    private Long salary;
+    private Long overtimePay;
+    private Long socialInsurance;
+    private Long healthInsurance;
     private Long incomeTax;
     private Long allowances = 0L;
-
     @Transient
     private Long totalSalary;
 
-    public Payslip() {
-    }
 
-    public Payslip(Employee employee, YearMonth month, Long salary, Long overtimePay, Long socialInsurance, Long healthInsurance, Long allowances) {
-        this.employee = employee;
-        this.month = month;
-        this.salary = salary;
-        this.overtimePay = overtimePay;
-        this.socialInsurance = socialInsurance;
-        this.healthInsurance = healthInsurance;
-        this.allowances = allowances;
-    }
+
 
     public Long getId() {
         return id;
@@ -100,7 +96,7 @@ public class Payslip {
     }
 
     public Long getIncomeTax() {
-        return TaxCalculator.calTax(salary + overtimePay + allowances - socialInsurance - healthInsurance);
+        return incomeTax;
     }
 
     public void setIncomeTax(Long incomeTax) {

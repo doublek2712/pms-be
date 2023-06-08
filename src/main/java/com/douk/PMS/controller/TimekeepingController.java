@@ -7,6 +7,7 @@ import com.douk.PMS.repo.EmployeeRepository;
 import com.douk.PMS.service.EmployeeService;
 import com.douk.PMS.service.TimekeepingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Time;
@@ -16,6 +17,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/timekeeping")
+@PreAuthorize("hasAuthority('HR')")
 public class TimekeepingController {
 
     @Autowired

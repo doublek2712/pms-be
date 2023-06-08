@@ -17,7 +17,25 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: true
     show-sql: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: qk.khai2712@gmail.com
+    password: pqvyciabeldoifwg
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
-business:
-  baseSalary: 1490000
-  personalDeductions: 11000000
+application:
+  security:
+    jwt:
+      secret-key: 3777217A25432A462D4A614E645267556B58703273357538782F413F4428472B
+      expiration: 86400000 # a day
+      refresh-token:
+        expiration: 604800000 # 7 days
+  business:
+    base-salary: 1490000
+    personal-deductions: 11000000

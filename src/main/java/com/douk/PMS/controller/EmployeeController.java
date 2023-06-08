@@ -2,20 +2,24 @@ package com.douk.PMS.controller;
 
 import com.douk.PMS.dto.EmployeeDTO;
 import com.douk.PMS.entity.Employee;
+import com.douk.PMS.entity.User;
+import com.douk.PMS.repo.UserRepository;
 import com.douk.PMS.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin
 @RequestMapping(path = "api/employee")
+@PreAuthorize("hasAuthority('HR')")
 public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
+
 
     @GetMapping(path = "all")
     public List<Employee> getAllEmployee(

@@ -6,22 +6,14 @@ public class PayslipDTO {
 
     private Long staffId;
     private YearMonth month;
-    private Long salary ;
-    private Long overtimePay ;
-    private Long socialInsurance ;
-    private Long healthInsurance ;
     private Long allowances ;
 
     public PayslipDTO() {
     }
 
-    public PayslipDTO(Long staffId, YearMonth month, Long salary, Long overtimePay, Long socialInsurance, Long healthInsurance, Long allowances) {
+    public PayslipDTO(Long staffId, YearMonth month, Long salary, Long overtimePay, Long allowances) {
         this.staffId = staffId;
         this.month = month;
-        this.salary = salary;
-        this.overtimePay = overtimePay;
-        this.socialInsurance = socialInsurance;
-        this.healthInsurance = healthInsurance;
         this.allowances = allowances;
     }
 
@@ -41,37 +33,6 @@ public class PayslipDTO {
         this.month = month;
     }
 
-    public Long getSalary() {
-        return salary;
-    }
-
-    public void setSalary(Long salary) {
-        this.salary = salary;
-    }
-
-    public Long getOvertimePay() {
-        return overtimePay;
-    }
-
-    public void setOvertimePay(Long overtimePay) {
-        this.overtimePay = overtimePay;
-    }
-
-    public Long getSocialInsurance() {
-        return socialInsurance;
-    }
-
-    public void setSocialInsurance(Long socialInsurance) {
-        this.socialInsurance = socialInsurance;
-    }
-
-    public Long getHealthInsurance() {
-        return healthInsurance;
-    }
-
-    public void setHealthInsurance(Long healthInsurance) {
-        this.healthInsurance = healthInsurance;
-    }
 
     public Long getAllowances() {
         return allowances;
