@@ -77,7 +77,8 @@ public class UserImpl implements UserService {
                 )
         );
         Optional<User> user = userRepository.findByEmail(loginDTO.getEmail());
-
+        if(user.isEmpty())
+            throw new IllegalStateException("user not exist");
 
         if(user.get().getUserRole().toString() == "BOD"){
             return AuthenticationResponse.builder()
@@ -90,6 +91,7 @@ public class UserImpl implements UserService {
                 .accessToken(jwtToken)
                 .userRole(user.get().getUserRole().toString())
                 .status("success")
+                .id(user.get().getId())
                 .build();
     }
 

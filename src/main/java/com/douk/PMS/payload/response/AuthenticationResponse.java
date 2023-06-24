@@ -18,5 +18,7 @@ public class AuthenticationResponse {
     private String userRole;
     @JsonProperty("status")
     private String status;
+    @JsonProperty("id")
+    private Long id;
 
 }

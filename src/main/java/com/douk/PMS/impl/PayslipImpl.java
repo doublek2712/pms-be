@@ -104,4 +104,19 @@ public class PayslipImpl implements PayslipService {
     public List<Payslip> getAllPayslip() {
         return payslipRepository.findAll();
     }
+
+    @Override
+    public List<Payslip> getAllPayslipByMonth(YearMonth month) {
+        return payslipRepository.findAllByMonth(month);
+    }
+
+    @Override
+    public String addMultiPayslip(List<PayslipDTO> payslipDTO) {
+        String response = "";
+        for (int i = 0; i < payslipDTO.size(); i++) {
+            PayslipDTO item = payslipDTO.get(i);
+            response += addPayslip(item) + "/n";
+        }
+        return response;
+    }
 }

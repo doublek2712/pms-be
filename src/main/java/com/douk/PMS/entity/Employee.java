@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Formula;
 import org.springframework.cglib.core.Local;
 
 import java.sql.Date;
@@ -21,6 +22,8 @@ public class Employee {
     private Long id;
     private String firstName;
     private String lastName;
+    @Column(name = "name")
+    private String name;
     private String gender;
     private String educational_lvl;
     private String birthplace;
@@ -37,7 +40,7 @@ public class Employee {
     private LocalDate startDate;
     private LocalDate contractDate;
     private Double salaryGrade;
-    private Long resignationDecision;
+//    private Long resignationDecision;
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "employee")
     private List<Timekeeping> timekeepingList;
@@ -47,7 +50,11 @@ public class Employee {
     private List<Payslip> payslipList;
 
 
-
+    @PrePersist
+    @PreUpdate
+    private void generateName() {
+        name = firstName + " " + lastName;
+    }
     public Employee() {
     }
 
@@ -230,13 +237,15 @@ public class Employee {
         this.salaryGrade = salaryGrade;
     }
 
-    public Long getResignationDecision() {
-        return resignationDecision;
+    public String getName() {
+        return name;
     }
 
-    public void setResignationDecision(Long resignationDecision) {
-        this.resignationDecision = resignationDecision;
+    public void setName(String name) {
+        this.name = name;
     }
+
+
 
     public List<Timekeeping> getTimekeepingList() {
         return timekeepingList;

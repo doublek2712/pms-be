@@ -12,12 +12,20 @@ public class Candidate{
 
     private String firstName;
     private String lastName;
+    private String name;
+
+    @PrePersist
+    @PreUpdate
+    private void generateName() {
+        name = firstName + " " + lastName;
+    }
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cv", referencedColumnName = "id")
     private FileStorage cv;
 
     private String applyPosition;
+
 
     public Candidate() {
     }

@@ -16,6 +16,7 @@ public interface PayslipService {
     Payslip getPayslip(Employee employee, YearMonth month);
 
     List<Payslip>  getAllPayslip();
+    List<Payslip>  getAllPayslipByMonth(YearMonth month);
 
-
+    String addMultiPayslip(List<PayslipDTO> payslipDTO);
 }

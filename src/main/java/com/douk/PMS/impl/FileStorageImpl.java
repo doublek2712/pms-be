@@ -16,6 +16,7 @@ public class FileStorageImpl implements FileStorageService {
 
     @Autowired
     private FileStorageRepository fileStorageRepository;
+
     @Override
     public String uploadFile(MultipartFile file) throws IOException {
         FileStorage imageData = fileStorageRepository.save(FileStorage.builder()

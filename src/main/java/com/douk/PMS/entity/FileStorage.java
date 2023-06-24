@@ -22,6 +22,6 @@ public class FileStorage {
     private String type;
 
     @Lob
-    @Column(name = "data", length = 1000)
+    @Column(name = "data", length = 5000000)
     private byte[] data;
 }

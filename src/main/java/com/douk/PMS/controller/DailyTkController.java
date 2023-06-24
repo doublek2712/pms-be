@@ -29,6 +29,11 @@ public class DailyTkController {
         dailyTkService.addDailyTk(dailyTkDTO);
     }
 
+    @PostMapping(path = "save/multi")
+    public void addMultiDailyTk(@RequestBody List<DailyTkDTO> dailyTkDTO){
+        dailyTkService.addMultiDailyTk(dailyTkDTO);
+    }
+
     @GetMapping(path = "all")
     public List<DailyTk> getAllDailyTk(
             @RequestParam(name = "day", required = false)LocalDate day

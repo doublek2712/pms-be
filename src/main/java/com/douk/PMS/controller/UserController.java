@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/user")
-@PreAuthorize("hasAuthority('ADMIN')")
+//@PreAuthorize("hasAuthority('ADMIN')")
 public class UserController {
 
     @Autowired
@@ -50,6 +50,7 @@ public class UserController {
 
 
     @GetMapping
+//    @PreAuthorize("hasAnyAuthority('ADMIN', 'ACCOUNTANT', 'HR')")
     public Optional<User> getUser(@RequestParam(name = "id") Long id){
         return userService.getUser(id);
     }

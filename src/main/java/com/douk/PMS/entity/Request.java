@@ -1,9 +1,6 @@
 package com.douk.PMS.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -16,6 +13,7 @@ public class Request {
     private Long bodId;
     private String message;
     private YearMonth month;
+
 
     public Request() {
     }
@@ -57,4 +55,6 @@ public class Request {
     public void setMonth(YearMonth month) {
         this.month = month;
     }
+
+
 }

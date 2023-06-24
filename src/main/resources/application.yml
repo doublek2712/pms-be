@@ -6,9 +6,9 @@ server:
 
 spring:
   datasource:
-    password: 272612
-    url: jdbc:mysql://localhost:3306/pms_be
-    username: root
+    password: 4YBhTtRy6ZUug9yesCYn
+    url: jdbc:mysql://updxcu6y4xaecqac:4YBhTtRy6ZUug9yesCYn@bxqlctthoz98osljpsts-mysql.services.clever-cloud.com:3306/bxqlctthoz98osljpsts
+    username: updxcu6y4xaecqac
   jpa:
     hibernate:
       ddl-auto: update

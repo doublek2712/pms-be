@@ -17,4 +17,6 @@ public interface DailyTkService {
     void addDailyTk(DailyTkDTO dailyTkDTO);
 
     void updateDailyTkType(LocalDate day, Employee employee, TkType type);
+
+    String addMultiDailyTk(List<DailyTkDTO> dailyTkDTO);
 }

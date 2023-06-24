@@ -1,6 +1,7 @@
 package com.douk.PMS.impl;
 
 import com.douk.PMS.dto.DailyTkDTO;
+import com.douk.PMS.dto.PayslipDTO;
 import com.douk.PMS.entity.DailyTk;
 import com.douk.PMS.entity.Employee;
 import com.douk.PMS.entity.Timekeeping;
@@ -77,5 +78,14 @@ public class DailyTkImpl implements DailyTkService {
             throw new IllegalStateException("daily_tk not exist");
 
         dailyTk.get().setType(type);
+    }
+
+    @Override
+    public String addMultiDailyTk(List<DailyTkDTO> dailyTkDTO) {
+        for (int i = 0; i < dailyTkDTO.size(); i++) {
+            DailyTkDTO item = dailyTkDTO.get(i);
+            addDailyTk(item);
+        }
+        return "success add multi";
     }
 }

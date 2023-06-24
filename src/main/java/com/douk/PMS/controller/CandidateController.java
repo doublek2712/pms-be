@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/candidate")
-@PreAuthorize("hasAuthority('HR')")
+//@PreAuthorize("hasAuthority('HR')")
 public class CandidateController {
 
     @Autowired

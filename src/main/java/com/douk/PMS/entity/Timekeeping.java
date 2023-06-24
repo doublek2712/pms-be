@@ -1,5 +1,6 @@
 package com.douk.PMS.entity;
 
+import com.douk.PMS.dto.PayslipDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
@@ -14,6 +15,8 @@ public class Timekeeping {
     private Long id;
     private YearMonth month;
     private int working_days;
+
+
     private int days_off;
     private int overtime;
     private int total;

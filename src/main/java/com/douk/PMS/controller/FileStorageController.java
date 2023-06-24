@@ -1,5 +1,6 @@
 package com.douk.PMS.controller;
 
+import com.douk.PMS.repo.FileStorageRepository;
 import com.douk.PMS.service.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,14 +16,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/file")
-@PreAuthorize("hasAuthority('HR')")
+//@PreAuthorize("hasAuthority('HR')")
 public class FileStorageController {
 
     @Autowired
     private FileStorageService fileStorageService;
 
+    @Autowired
+    private FileStorageRepository fileStorageRepository;
+
     @PostMapping
-    public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
+    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         String uploadImage = fileStorageService.uploadFile(file);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(uploadImage);
@@ -35,6 +39,10 @@ public class FileStorageController {
     public ResponseEntity<?> downloadImage(@PathVariable String fileName){
         byte[] fileData=fileStorageService.downloadFile(fileName);
 
+        String type = fileStorageRepository.findByFilename(fileName).get().getType();
+
+
+
         //MediaType mediaType = fileData.
 
 //        List<MediaType> mediaTypes = new ArrayList<>();
@@ -43,7 +51,7 @@ public class FileStorageController {
 //        mediaTypes.add(MediaType.valueOf("application/pdf"));
 
         return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.valueOf("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
+                .contentType(MediaType.valueOf(type))
                 .body(fileData);
 
     }

@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/timekeeping")
-@PreAuthorize("hasAuthority('HR')")
+//@PreAuthorize("hasAnyAuthority('HR','ACCOUNTANT')")
 public class TimekeepingController {
 
     @Autowired

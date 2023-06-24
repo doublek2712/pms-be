@@ -22,6 +22,15 @@ public class DailyTk {
 
     private TkType type;
 
+    @PrePersist
+    @PreUpdate
+    private void generateType() {
+        if(day.getDayOfWeek().toString().equals("SUNDAY"))
+            type = TkType.T;
+        else
+            type = TkType.D;
+    }
+
     @ManyToOne
     @JoinColumn(name = "tk_id", referencedColumnName = "id")
     private Timekeeping timekeeping;

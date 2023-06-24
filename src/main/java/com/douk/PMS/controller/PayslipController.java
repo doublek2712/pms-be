@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/payslip")
-@PreAuthorize("hasAuthority('ACCOUNTANT')")
+//@PreAuthorize("hasAuthority('ACCOUNTANT')")
 public class PayslipController {
 
     @Autowired
@@ -29,8 +29,18 @@ public class PayslipController {
         return payslipService.addPayslip(payslipDTO);
     }
 
+    @PostMapping(path = "save/multi")
+    public String addMultiPayslip(@RequestBody List<PayslipDTO> payslipDTO){
+        return payslipService.addMultiPayslip(payslipDTO);
+    }
+
     @GetMapping(path = "all")
-    public List<Payslip> getAllPayslip(){
+    public List<Payslip> getAllPayslip(
+            @RequestParam(name = "month", required = false) YearMonth month
+    ){
+        if(month != null){
+            return payslipService.getAllPayslipByMonth(month);
+        }
         return payslipService.getAllPayslip();
     }
 

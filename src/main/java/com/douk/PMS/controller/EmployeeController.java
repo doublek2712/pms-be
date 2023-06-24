@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/employee")
-@PreAuthorize("hasAuthority('HR')")
+//@PreAuthorize("hasAnyAuthority('HR', 'ACCOUNTANT')")
 public class EmployeeController {
 
     @Autowired
@@ -29,8 +29,8 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public Optional<Employee> getEmployee(@RequestParam(name = "id") Long id){
-        return employeeService.getEmployee(id);
+    public Employee getEmployee(@RequestParam(name = "id") Long id){
+        return employeeService.getEmployee(id).get();
     }
 
 

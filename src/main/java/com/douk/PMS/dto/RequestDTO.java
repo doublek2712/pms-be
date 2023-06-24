@@ -3,22 +3,16 @@ package com.douk.PMS.dto;
 import java.time.YearMonth;
 
 public class RequestDTO {
-    private Long bodId;
+    private String email;
     private String message;
     private YearMonth month;
 
-    public RequestDTO(Long bodId, String message, YearMonth month) {
-        this.bodId = bodId;
-        this.message = message;
-        this.month = month;
+    public String getEmail() {
+        return email;
     }
 
-    public Long getBodId() {
-        return bodId;
-    }
-
-    public void setBodId(Long bodId) {
-        this.bodId = bodId;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getMessage() {
@@ -34,6 +28,12 @@ public class RequestDTO {
     }
 
     public void setMonth(YearMonth month) {
+        this.month = month;
+    }
+
+    public RequestDTO(String email, String message, YearMonth month) {
+        this.email = email;
+        this.message = message;
         this.month = month;
     }
 }
