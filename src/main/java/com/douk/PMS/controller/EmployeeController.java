@@ -39,10 +39,19 @@ public class EmployeeController {
         return employeeService.addEmployee(employeeDTO);
     }
 
+    @PostMapping(path = "save/multi")
+    public String addMultiEmployee(@RequestBody List<EmployeeDTO> employeeDTO){
+        for(int i=0;i<employeeDTO.size();i++){
+            EmployeeDTO item = employeeDTO.get(i);
+            employeeService.addEmployee(item);
+        }
+        return "success add multi employee";
+    }
+
     @PutMapping(path = "update")
-    public void updateEmployee(@RequestParam(name = "id") Long id,
+    public String updateEmployee(@RequestParam(name = "id") Long id,
                                @RequestBody EmployeeDTO employeeDTO){
-        employeeService.updateEmployee(id, employeeDTO);
+        return employeeService.updateEmployee(id, employeeDTO);
     }
 
     @PutMapping(path = "{employeeId}/attach")

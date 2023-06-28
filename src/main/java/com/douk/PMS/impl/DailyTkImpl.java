@@ -88,4 +88,16 @@ public class DailyTkImpl implements DailyTkService {
         }
         return "success add multi";
     }
+
+    @Override
+    public List<DailyTk> getAllDailyTkByEmployeeAndMonth(Long staffId, YearMonth month) {
+        Optional<Timekeeping> timekeeping = timekeepingRepository.findByMonthAndEmployee(
+                month,
+                employeeRepository.findById(staffId).get()
+                );
+        if(timekeeping.isEmpty())
+            throw new IllegalStateException("timekeeping not exist");
+
+        return dailyTkRepository.findAllByTimekeeping(timekeeping.get());
+    }
 }

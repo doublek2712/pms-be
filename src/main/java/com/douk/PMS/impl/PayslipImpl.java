@@ -11,6 +11,7 @@ import com.douk.PMS.service.PayslipService;
 import com.douk.PMS.utils.TaxCalculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.YearMonth;
 import java.util.List;
@@ -73,6 +74,8 @@ public class PayslipImpl implements PayslipService {
         return "added payslip of " + newPayslip.getEmployee().getFirstName() + ", month "+ newPayslip.getMonth();
     }
 
+
+
     private Long calOvertimePay(int overtime, Long dailySalary) {
         return (long) (overtime * 1.5 * dailySalary);
     }
@@ -118,5 +121,33 @@ public class PayslipImpl implements PayslipService {
             response += addPayslip(item) + "/n";
         }
         return response;
+    }
+
+    @Transactional
+    @Override
+    public void updateSalary() {
+        List<Payslip> list = payslipRepository.findAll();
+
+        for(int i=0;i<list.size();i++)
+        {
+            Payslip item = list.get(i);
+            Optional<Timekeeping> timekeeping = timekeepingRepository.findByMonthAndEmployee(
+                    item.getMonth(),
+                    item.getEmployee()
+            );
+            Long dailySalary =
+                    (long) ((Payslip.basicSalary * item.getEmployee().getSalaryGrade()) / item.getMonth().lengthOfMonth());
+
+            item.setSalary(calSalary(timekeeping.get().getWorking_days(), dailySalary));
+            item.setOvertimePay(calOvertimePay(timekeeping.get().getOvertime(), dailySalary));
+            item.setSocialInsurance((long) (item.getSalary() * 0.105));
+            item.setIncomeTax(TaxCalculator.calTax(
+                    item.getSalary()
+                            + item.getOvertimePay()
+                            + item.getAllowances()
+                            - item.getSocialInsurance()
+                            - item.getHealthInsurance()));
+        }
+
     }
 }

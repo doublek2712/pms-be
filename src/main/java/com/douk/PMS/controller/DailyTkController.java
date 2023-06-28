@@ -5,11 +5,13 @@ import com.douk.PMS.entity.DailyTk;
 import com.douk.PMS.entity.Employee;
 import com.douk.PMS.entity.TkType;
 import com.douk.PMS.repo.EmployeeRepository;
+import com.douk.PMS.repo.TimekeepingRepository;
 import com.douk.PMS.service.DailyTkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +26,8 @@ public class DailyTkController {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+
+
     @PostMapping(path = "save")
     public void addDailyTk(@RequestBody DailyTkDTO dailyTkDTO){
         dailyTkService.addDailyTk(dailyTkDTO);
@@ -34,6 +38,8 @@ public class DailyTkController {
         dailyTkService.addMultiDailyTk(dailyTkDTO);
     }
 
+
+
     @GetMapping(path = "all")
     public List<DailyTk> getAllDailyTk(
             @RequestParam(name = "day", required = false)LocalDate day
@@ -41,6 +47,14 @@ public class DailyTkController {
         if(day != null)
             return dailyTkService.getByDay(day);
         return dailyTkService.getAllDailyTk();
+    }
+
+    @GetMapping("all/{staffId}")
+    public List<DailyTk> getAllDailyTkByEmployeeAndMonth(
+            @PathVariable("staffId") Long staffId,
+            @RequestParam("month") YearMonth month
+            ){
+        return dailyTkService.getAllDailyTkByEmployeeAndMonth(staffId, month);
     }
 
     @PutMapping(path = "update")

@@ -24,9 +24,9 @@ public class FileStorageImpl implements FileStorageService {
                 .type(file.getContentType())
                 .data(FileStorageUtils.compressImage(file.getBytes())).build());
         if (imageData != null) {
-            return "file uploaded successfully : " + file.getOriginalFilename();
+            return file.getOriginalFilename();
         }
-        return null;
+        return "fail to upload";
     }
 
     @Override

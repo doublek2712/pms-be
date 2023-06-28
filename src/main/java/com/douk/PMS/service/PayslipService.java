@@ -19,4 +19,6 @@ public interface PayslipService {
     List<Payslip>  getAllPayslipByMonth(YearMonth month);
 
     String addMultiPayslip(List<PayslipDTO> payslipDTO);
+
+    void updateSalary();
 }

@@ -29,25 +29,25 @@ public class EmployeeImpl implements EmployeeService {
     @Override
     public String addEmployee(EmployeeDTO employeeDTO){
 
-        Employee newEmployee = new Employee(
-                employeeDTO.getFirstName(),
-                employeeDTO.getLastName(),
-                employeeDTO.getGender(),
-                employeeDTO.getEducational_lvl(),
-                employeeDTO.getBirthplace(),
-                employeeDTO.getEthnicity(),
-                employeeDTO.getCitizenId(),
-                employeeDTO.getBirthdate(),
-                employeeDTO.getAddress(),
-                employeeDTO.getHometown(),
-                employeeDTO.getPhoneNumber(),
-                employeeDTO.getPosition(),
-                employeeDTO.getStartDate(),
-                employeeDTO.getContractDate(),
-                employeeDTO.getSalaryGrade()
-        );
+        Employee newEmployee = Employee.builder()
+                .firstName(employeeDTO.getFirstName())
+                .lastName(employeeDTO.getLastName())
+                .gender(employeeDTO.getGender())
+                .educational_lvl(employeeDTO.getEducational_lvl())
+                .birthplace(employeeDTO.getBirthplace())
+                .ethnicity(employeeDTO.getEthnicity())
+                .citizenId(employeeDTO.getCitizenId())
+                .birthdate(employeeDTO.getBirthdate())
+                .address(employeeDTO.getAddress())
+                .hometown(employeeDTO.getHometown())
+                .phoneNumber(employeeDTO.getPhoneNumber())
+                .position(employeeDTO.getPosition())
+                .startDate(employeeDTO.getStartDate())
+                .contractDate(employeeDTO.getContractDate())
+                .salaryGrade(employeeDTO.getSalaryGrade())
+                .build();
 
-        Optional<Department> dept = departmentRepository.findById(employeeDTO.getDeptId());
+        Optional<Department> dept = departmentRepository.findById(employeeDTO.getDept());
 
         if(dept.isPresent())
             newEmployee.setDept(dept.get());
@@ -59,7 +59,7 @@ public class EmployeeImpl implements EmployeeService {
 
     @Transactional
     @Override
-    public void updateEmployee(Long id, EmployeeDTO employeeDTO) {
+    public String updateEmployee(Long id, EmployeeDTO employeeDTO) {
         Employee employee = employeeRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException(
                         "employee with id" + id +"not exist"));
@@ -80,9 +80,11 @@ public class EmployeeImpl implements EmployeeService {
         employee.setStartDate(employeeDTO.getStartDate());
         employee.setContractDate(employeeDTO.getContractDate());
 
-        Optional<Department> dept = departmentRepository.findById(employeeDTO.getDeptId());
+        Optional<Department> dept = departmentRepository.findById(employeeDTO.getDept());
         if(dept.isPresent())
             employee.setDept(dept.get());
+
+        return "employee "+employee.getName()+" updated";
     }
 
     @Transactional
@@ -110,11 +112,12 @@ public class EmployeeImpl implements EmployeeService {
 
     @Override
     public String addEmployeeFromCandidate(EmployeeDTO employeeDTO) {
-        Employee newEmployee = new Employee(
-                employeeDTO.getFirstName(),
-                employeeDTO.getLastName(),
-                employeeDTO.getPosition()
-        );
+        Employee newEmployee = Employee.builder()
+                .firstName(employeeDTO.getFirstName())
+                .lastName(employeeDTO.getLastName())
+                .position(employeeDTO.getPosition())
+                .gender(employeeDTO.getGender())
+                .build();
 
         employeeRepository.save(newEmployee);
         return "employee " + newEmployee.getFirstName() + " added, from candidate table";

@@ -3,22 +3,35 @@ package com.douk.PMS.impl;
 import com.douk.PMS.dto.EmailDetails;
 import com.douk.PMS.dto.UserDTO;
 import com.douk.PMS.dto.VerifyTokenDTO;
+import com.douk.PMS.repo.FileStorageRepository;
 import com.douk.PMS.service.EmailService;
+import com.douk.PMS.service.FileStorageService;
+import com.douk.PMS.utils.FileStorageUtils;
 import com.douk.PMS.utils.PasswordGenerator;
+import jakarta.mail.BodyPart;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
+import jakarta.mail.Multipart;
+import jakarta.mail.internet.MimeBodyPart;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.mail.internet.MimeMultipart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 
 @Service
@@ -68,19 +81,45 @@ public class EmailImpl implements EmailService {
         }
     }
 
+    @Autowired
+    private FileStorageService fileStorageService;
+
+    @Autowired
+    private FileStorageRepository fileStorageRepository;
+
     @Override
-    public String sendIdentityBOD(String toEmail) {
-        String code = PasswordGenerator.generatePassword(5);
+    public String sendToBOD(String toEmail, MultipartFile file) throws IOException {
+        byte[] fileData = file.getBytes();
+
         try{
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper helper =
                     new MimeMessageHelper(mimeMessage, "utf-8");
-            helper.setText(buildIdentityEmail("Sir", code), true);
+
+            helper.setSubject("Here your payroll!");
             helper.setTo(toEmail);
-            helper.setSubject("Here your verification code!");
             helper.setFrom(Objects.requireNonNull(environment.getProperty("spring.mail.username")));
+
+            Multipart multipart = new MimeMultipart();
+
+            // Create the text part of the email
+            BodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setText("Dear Sir/Madam,"+
+                    "\nHere is the payroll according to your request.");
+            multipart.addBodyPart(messageBodyPart);
+
+            // Create the attachment part
+            messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setContent(fileData, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            messageBodyPart.setFileName(file.getOriginalFilename());
+            multipart.addBodyPart(messageBodyPart);
+
+            // Set the content of the message to multipart
+            mimeMessage.setContent(multipart);
+
             javaMailSender.send(mimeMessage);
-            return code;
+            return "Send email successful";
+//            return code;
         } catch (MessagingException e){
             LOGGER.error("failed to send email", e);
             throw new IllegalStateException("failed to send email");

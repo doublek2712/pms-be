@@ -75,6 +75,7 @@ public class TimekeepingImpl implements TimekeepingService {
         return timekeepingRepository.findAll();
     }
 
+
     @Override
     public Timekeeping getTimekeepingByMonthAndEmployee(YearMonth month, Employee employee) {
         return timekeepingRepository.findByMonthAndEmployee(month, employee).get();

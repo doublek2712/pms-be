@@ -41,15 +41,6 @@ public class FileStorageController {
 
         String type = fileStorageRepository.findByFilename(fileName).get().getType();
 
-
-
-        //MediaType mediaType = fileData.
-
-//        List<MediaType> mediaTypes = new ArrayList<>();
-//        mediaTypes.add(MediaType.valueOf("application/vnd.openxmlformats-officedocument.wordprocessingml.document"));
-//        mediaTypes.add(MediaType.valueOf("application/msword"));
-//        mediaTypes.add(MediaType.valueOf("application/pdf"));
-
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.valueOf(type))
                 .body(fileData);

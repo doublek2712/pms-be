@@ -6,6 +6,7 @@ import com.douk.PMS.entity.Employee;
 import com.douk.PMS.entity.TkType;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 
 public interface DailyTkService {
@@ -19,4 +20,6 @@ public interface DailyTkService {
     void updateDailyTkType(LocalDate day, Employee employee, TkType type);
 
     String addMultiDailyTk(List<DailyTkDTO> dailyTkDTO);
+
+    List<DailyTk> getAllDailyTkByEmployeeAndMonth(Long staffId, YearMonth month);
 }

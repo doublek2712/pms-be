@@ -63,4 +63,9 @@ public class PayslipController {
         return "employee id not exist";
     }
 
+    @PutMapping("update")
+    public void updateSalary(){
+        payslipService.updateSalary();
+    }
+
 }

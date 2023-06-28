@@ -1,8 +1,15 @@
 package com.douk.PMS.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import java.sql.Date;
 import java.time.LocalDate;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class EmployeeDTO {
     private String firstName;
     private String lastName;
@@ -15,38 +22,14 @@ public class EmployeeDTO {
     private String address;
     private String hometown;
     private String phoneNumber;
-    private Long deptId;
+    private Long dept;
     private String position;
     private LocalDate startDate;
     private LocalDate contractDate;
     private Double salaryGrade;
     private Long resignationDecision;
 
-    public EmployeeDTO() {
-    }
 
-    public EmployeeDTO(String firstName, String lastName, String gender, String educational_lvl, String birthplace, String ethnicity, String citizenId, LocalDate birthdate, String address, String hometown, String phoneNumber, Long deptId, String position,  Double salaryGrade) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.educational_lvl = educational_lvl;
-        this.birthplace = birthplace;
-        this.ethnicity = ethnicity;
-        this.citizenId = citizenId;
-        this.birthdate = birthdate;
-        this.address = address;
-        this.hometown = hometown;
-        this.phoneNumber = phoneNumber;
-        this.deptId = deptId;
-        this.position = position;
-        this.salaryGrade = salaryGrade;
-    }
-
-    public EmployeeDTO(String firstName, String lastName, String position) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.position = position;
-    }
 
     public LocalDate getStartDate() {
         return startDate;
@@ -64,24 +47,6 @@ public class EmployeeDTO {
         this.contractDate = contractDate;
     }
 
-    public EmployeeDTO(String firstName, String lastName, String gender, String educational_lvl, String birthplace, String ethnicity, String citizenId, LocalDate birthdate, String address, String hometown, String phoneNumber, Long deptId, String position, LocalDate startDate, LocalDate contractDate, Double salaryGrade) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.educational_lvl = educational_lvl;
-        this.birthplace = birthplace;
-        this.ethnicity = ethnicity;
-        this.citizenId = citizenId;
-        this.birthdate = birthdate;
-        this.address = address;
-        this.hometown = hometown;
-        this.phoneNumber = phoneNumber;
-        this.deptId = deptId;
-        this.position = position;
-        this.startDate = startDate;
-        this.contractDate = contractDate;
-        this.salaryGrade = salaryGrade;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -171,12 +136,12 @@ public class EmployeeDTO {
         this.phoneNumber = phoneNumber;
     }
 
-    public Long getDeptId() {
-        return deptId;
+    public Long getDept() {
+        return dept;
     }
 
-    public void setDeptId(Long deptId) {
-        this.deptId = deptId;
+    public void setDept(Long dept) {
+        this.dept = dept;
     }
 
     public String getPosition() {

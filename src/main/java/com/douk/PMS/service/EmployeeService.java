@@ -12,7 +12,7 @@ public interface EmployeeService {
 
     String addEmployee(EmployeeDTO employeeDTO);
 
-    void updateEmployee(Long id, EmployeeDTO employeeDTO);
+    String updateEmployee(Long id, EmployeeDTO employeeDTO);
 
     void attachResignationDecision(Long id, Long resignationDecision);
 

@@ -4,6 +4,7 @@ package com.douk.PMS.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Formula;
 import org.springframework.cglib.core.Local;
@@ -13,6 +14,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Employee {
 
     @Id
@@ -54,51 +58,6 @@ public class Employee {
     @PreUpdate
     private void generateName() {
         name = firstName + " " + lastName;
-    }
-    public Employee() {
-    }
-
-    public Employee(String firstName, String lastName, String gender, String educational_lvl, String birthplace, String ethnicity, String citizenId, LocalDate birthdate, String address, String hometown, String phoneNumber, Department dept, String position, LocalDate startDate, LocalDate contractDate, Double salaryGrade) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.educational_lvl = educational_lvl;
-        this.birthplace = birthplace;
-        this.ethnicity = ethnicity;
-        this.citizenId = citizenId;
-        this.birthdate = birthdate;
-        this.address = address;
-        this.hometown = hometown;
-        this.phoneNumber = phoneNumber;
-        this.dept = dept;
-        this.position = position;
-        this.startDate = startDate;
-        this.contractDate = contractDate;
-        this.salaryGrade = salaryGrade;
-    }
-
-    public Employee(String firstName, String lastName, String gender, String educational_lvl, String birthplace, String ethnicity, String citizenId, LocalDate birthdate, String address, String hometown, String phoneNumber, String position, LocalDate startDate, LocalDate contractDate, Double salaryGrade) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.educational_lvl = educational_lvl;
-        this.birthplace = birthplace;
-        this.ethnicity = ethnicity;
-        this.citizenId = citizenId;
-        this.birthdate = birthdate;
-        this.address = address;
-        this.hometown = hometown;
-        this.phoneNumber = phoneNumber;
-        this.position = position;
-        this.startDate = startDate;
-        this.contractDate = contractDate;
-        this.salaryGrade = salaryGrade;
-    }
-
-    public Employee(String firstName, String lastName, String position) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.position = position;
     }
 
     public Long getId() {

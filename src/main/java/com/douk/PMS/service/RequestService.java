@@ -1,20 +1,14 @@
 package com.douk.PMS.service;
 
-import com.douk.PMS.dto.RequestDTO;
-import com.douk.PMS.entity.Request;
-import com.douk.PMS.payload.response.RequestPayrollResponse;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.io.IOException;
 
 public interface RequestService {
 
-    void addRequest(RequestDTO requestDTO);
-
-    void deleteRequest(Long id);
-
-    List<Request> getAllRequest();
-
-    RequestPayrollResponse sendRequest(String toEmail);
+    String sendRequest(String toEmail, MultipartFile file) throws IOException;
 
     Boolean verifyEmail(String email);
+
+
 }
